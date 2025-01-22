@@ -47,11 +47,12 @@ jobs:
         env:
           JF_URL: https://trialuz45a9.jfrog.io
 
-      - name: Authenticate JFrog CLI with secret
+      - name: Authenticate JFrog CLI
         run: |
           jf c add DevSecOps-JF \
-            --url=https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/ \
-            --access-token=${{ secrets.JFROG_TOKEN }}
+            --url=https://trialuz45a9.jfrog.io/artifactory \
+            --access-token=${{ secrets.JFROG_TOKEN }} \
+            --overwrite=true
 
       - name: Verify JFrog CLI
         run: jf -v
