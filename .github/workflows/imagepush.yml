@@ -8,7 +8,7 @@ jobs:
   image_push:
     runs-on: DevSecOps_runner
     env:
-      DOCKER_IMAGE: ankit1111/petapp:${{ github.sha }}
+      DOCKER_IMAGE: tobadocker12/petapp:${{ github.sha }}
 
     steps:
       - name: Build Docker Image
