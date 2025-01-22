@@ -18,7 +18,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: self-hosted
+    runs-on: DevSecOps
     steps:
       - name: SonarCloud Scan
         run: mvn sonar:sonar \

@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: DevSecOps
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
           jf c add my-artifactory \
             --url=https://trialuz45a9.jfrog.io/artifactory \
             --access-token=${{ secrets.JFROG_TOKEN }}
-            
+
       - name: Verify JFrog CLI
         run: jf -v
 

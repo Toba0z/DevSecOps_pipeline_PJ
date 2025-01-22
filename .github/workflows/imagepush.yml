@@ -6,7 +6,7 @@ on:
 
 jobs:
   image_push:
-    runs-on: self-hosted
+    runs-on: DevSecOps
     env:
       DOCKER_IMAGE: tobadocker12/petapp:${{ github.sha }}
 
