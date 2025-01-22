@@ -18,7 +18,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: java_build
+    runs-on: DevSecOps_runner
     steps:
       - name: SonarCloud Scan
         run: mvn sonar:sonar \
