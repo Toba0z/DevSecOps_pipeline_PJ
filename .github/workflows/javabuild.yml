@@ -17,7 +17,7 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      # Install Maven only if cache miss (improves performance)
+      # Install Maven only if cache miss (improves performance)...
       - name: Install Maven (if cache miss)
         run: |
           sudo apt-get update && sudo apt-get install -y maven
