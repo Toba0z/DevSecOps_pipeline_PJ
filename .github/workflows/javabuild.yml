@@ -49,7 +49,7 @@ jobs:
 
       - name: Authenticate JFrog CLI with secret
         run: |
-          jf c add my-artifactory \
+          jf c add DevSecOps-JF \
             --url=https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/ \
             --access-token=${{ secrets.JFROG_TOKEN }}
 
