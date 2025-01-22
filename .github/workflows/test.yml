@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: [self-hosted, DevSecOps_runner]
+    runs-on: self-hosted
 
     #needs: build  # Ensures test only runs after build succeeds
     steps:
