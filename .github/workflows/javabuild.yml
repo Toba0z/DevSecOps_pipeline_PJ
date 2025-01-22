@@ -1,8 +1,7 @@
-# .github/workflows/build.yml
 name: Build
 
 on: 
- workflow_call:
+  workflow_call:
 
 jobs:
   build:
@@ -18,6 +17,14 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      # Ensure Maven is installed
+      - name: Install Maven
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y maven
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
         with:
@@ -32,11 +39,7 @@ jobs:
         with:
           name: jar
           path: target/*.jar
-        
-    #   - name: Configure JFrog CLI
-    # token 
-    #     run: |
-    #         jfrog config add my-artifactory --url=https://trial42aeja.jfrog.io --apikey=${{ secrets.JFROG_TOKEN }}
+
       - name: Configure JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3
         with:
@@ -44,6 +47,7 @@ jobs:
         env:
           JF_URL: https://trialp9y8bu.jfrog.io
           JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
+
       - name: Upload JAR to JFrog
         run: |
-           sudo jf rt u "target/*.jar" "petjfrog-repo/"     
+          jf rt u "target/*.jar" "petjfrog-repo/"
