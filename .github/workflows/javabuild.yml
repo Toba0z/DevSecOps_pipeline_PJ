@@ -17,7 +17,7 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      # Install Maven only if cache miss (improves performance)...
+      # Install Maven only if cache miss (improves performance)
       - name: Install Maven (if cache miss)
         run: |
           sudo apt-get update && sudo apt-get install -y maven
@@ -49,12 +49,12 @@ jobs:
 
       - name: Authenticate JFrog CLI with secret
         run: |
-          jf c add my-artifactory \
+          jf c add DevSecOps-JF \
             --url=https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/ \
             --access-token=${{ secrets.JFROG_TOKEN }}
 
       - name: Verify JFrog CLI
         run: jf -v
-
+        
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: jf rt u "target/*.jar" "DevSecOps-JF/"
