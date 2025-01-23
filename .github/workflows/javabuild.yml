@@ -17,7 +17,7 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      # Install Maven only if cache miss (improves performance)
+      # Install Maven only if cache miss (improves performance)...
       - name: Install Maven (if cache miss)
         run: |
           sudo apt-get update && sudo apt-get install -y maven
@@ -39,22 +39,60 @@ jobs:
         with:
           name: jar
           path: target/*.jar
+          
 
-      - name: Configure JFrog CLI (latest version)
+      # - name: Configure JFrog CLI (latest version)
+      #   uses: jfrog/setup-jfrog-cli@v3
+      #   with:
+      #     version: 'latest'
+      #   env:
+      #     JF_URL: https://trialuz45a9.jfrog.io
+
+      # - name: Authenticate JFrog CLI
+      #   run: |
+      #     jf c add DevSecOps-JF \
+      #       --url=https://trialuz45a9.jfrog.io/artifactory \
+      #       --access-token=${{ secrets.JFROG_TOKEN }} \
+      #       --overwrite=true
+
+      # - name: Verify JFrog CLI
+      #   run: jf -v
+
+      # - name: Upload Artifact to JFrog (use wildcard for all jars)
+      #   run: jf rt u "target/*.jar" "DevSecOps-JF/"
+
+      - name: Configure JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3
         with:
-          version: 'latest'
+          version: latest
         env:
           JF_URL: https://trialuz45a9.jfrog.io
+          JFROG_TOKEN: cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj
+          
+      - name: Check JFrog CLI version
+        run: |
+          which jf
+          jf --version
 
-      - name: Authenticate JFrog CLI with secret
+      - name: Authenticate JFrog CLI
         run: |
           jf c add DevSecOps-JF \
-            --url=https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/ \
-            --access-token=${{ secrets.JFROG_TOKEN }}
-
-      - name: Verify JFrog CLI
-        run: jf -v
+            --url=https://trialuz45a9.jfrog.io/artifactory \
+            --access-token=cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj \
+            --overwrite=true
         
       - name: Upload Artifact to JFrog (use wildcard for all jars)
-        run: jf rt u "target/*.jar" "DevSecOps-JF/"
+        run: |
+          jf rt u "target/*.jar" "DevSecOps-JF/"
+
+
+      # - name: Configure JFrog CLI
+      #   uses: jfrog/setup-jfrog-cli@v3
+      #   with:
+      #     version: latest
+      #   env:
+      #     JF_URL: https://trialp9y8bu.jfrog.io
+      #     JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
+      # - name: Upload JAR to JFrog
+      #   run: |
+      #      sudo jf rt u "target/*.jar" "DevSecOps-JF/"
