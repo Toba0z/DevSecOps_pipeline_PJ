@@ -40,27 +40,6 @@ jobs:
           name: jar
           path: target/*.jar
           
-
-      # - name: Configure JFrog CLI (latest version)
-      #   uses: jfrog/setup-jfrog-cli@v3
-      #   with:
-      #     version: 'latest'
-      #   env:
-      #     JF_URL: https://trialuz45a9.jfrog.io
-
-      # - name: Authenticate JFrog CLI
-      #   run: |
-      #     jf c add DevSecOps-JF \
-      #       --url=https://trialuz45a9.jfrog.io/artifactory \
-      #       --access-token=${{ secrets.JFROG_TOKEN }} \
-      #       --overwrite=true
-
-      # - name: Verify JFrog CLI
-      #   run: jf -v
-
-      # - name: Upload Artifact to JFrog (use wildcard for all jars)
-      #   run: jf rt u "target/*.jar" "DevSecOps-JF/"
-
       - name: Configure JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3
         with:
@@ -84,15 +63,3 @@ jobs:
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: |
           jf rt u "target/*.jar" "DevSecOps-JF/"
-
-
-      # - name: Configure JFrog CLI
-      #   uses: jfrog/setup-jfrog-cli@v3
-      #   with:
-      #     version: latest
-      #   env:
-      #     JF_URL: https://trialp9y8bu.jfrog.io
-      #     JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
-      # - name: Upload JAR to JFrog
-      #   run: |
-      #      sudo jf rt u "target/*.jar" "DevSecOps-JF/"
