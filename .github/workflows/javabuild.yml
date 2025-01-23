@@ -54,12 +54,14 @@ jobs:
           jf --version
 
       - name: Authenticate JFrog CLI
+        # run: |
+        #   jf c add DevSecOps-JF \
+        #     --url=https://trialuz45a9.jfrog.io/artifactory \
+        #     --access-token=cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj \
+        #     --overwrite=true
         run: |
-          jf c add DevSecOps-JF \
-            --url=https://trialuz45a9.jfrog.io/artifactory \
-            --access-token=cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj \
-            --overwrite=true
-        
+          frog config add --url "${{ secrets.JFROG_URL }}" --user "${{ secrets.JFROG_USER }}" --password "${{ secrets.JFROG_PASSWORD }}"
+
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: |
           jf rt u "target/*.jar" "DevSecOps-JF/"
