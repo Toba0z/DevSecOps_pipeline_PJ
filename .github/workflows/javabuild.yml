@@ -1,7 +1,11 @@
 name: Build
 
-on: 
+on:
   workflow_call:
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   build:
@@ -17,19 +21,18 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      # Install Maven only if cache miss (improves performance)...
-      - name: Install Maven (if cache miss)
-        run: |
-          sudo apt-get update && sudo apt-get install -y maven
-        env:
-          DEBIAN_FRONTEND: noninteractive
-          if: steps.cache-maven-dependencies.outputs == ''
-
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+      - name: Install Maven (if cache miss)
+        if: steps.cache-maven-dependencies.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update && sudo apt-get install -y maven
+        env:
+          DEBIAN_FRONTEND: noninteractive
 
       - name: Build with Maven
         run: mvn clean install
@@ -54,13 +57,11 @@ jobs:
           jf --version
 
       - name: Authenticate JFrog CLI
-        # run: |
-        #   jf c add DevSecOps-JF \
-        #     --url=https://trialuz45a9.jfrog.io/artifactory \
-        #     --access-token=cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj \
-        #     --overwrite=true
         run: |
-          frog config add --url "${{ secrets.JFROG_URL }}" --user "${{ secrets.JFROG_USER }}" --password "${{ secrets.JFROG_PASSWORD }}"
+          jf c add DevSecOps-JF \
+            --url=https://trialuz45a9.jfrog.io/artifactory \
+            --access-token=cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj \
+            --overwrite=true
 
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: |
