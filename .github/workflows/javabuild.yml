@@ -39,6 +39,7 @@ jobs:
         with:
           name: jar
           path: target/*.jar
+          
 
       # - name: Configure JFrog CLI (latest version)
       #   uses: jfrog/setup-jfrog-cli@v3
