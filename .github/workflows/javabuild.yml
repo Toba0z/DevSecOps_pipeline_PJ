@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: DevSecOps
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -24,6 +24,7 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
       - name: Install Maven (if cache miss)
+        if: steps.cache-maven-dependencies.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update && sudo apt-get install -y maven
         env:
@@ -41,22 +42,10 @@ jobs:
       - name: Configure JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3
         with:
-          version: latest
+            version: latest
         env:
-          JF_URL: https://trialuz45a9.jfrog.io
-          JFROG_TOKEN: cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj
-          
-      - name: Check JFrog CLI version
-        run: |
-          which jf
-          jf --version
-
-      - name: Authenticate JFrog CLI
-        run: |
-          jf c add DevSecOps-JF \
-            --url=https://trialuz45a9.jfrog.io/artifactory \
-            --access-token=cmVmdGtuOjAxOjAwMDAwMDAwMDA6RDBLVkh4V0xlUHlyWEs2bFFjbnY2ZXdwRDVj \
-            --overwrite=true
+            JF_URL: https://trialp9y8bu.jfrog.io
+            JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: |
