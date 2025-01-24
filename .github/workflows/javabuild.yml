@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: DevSecOps-JF
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -24,7 +24,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
       - name: Install Maven (if cache miss)
-        if: steps.cache-maven-dependencies.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update && sudo apt-get install -y maven
         env:

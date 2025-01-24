@@ -18,7 +18,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: ubuntu-latest
+    runs-on: DevSecOps-JF
     steps:
       - name: SonarCloud Scan
         run: mvn sonar:sonar \

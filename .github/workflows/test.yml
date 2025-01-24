@@ -6,8 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
+    runs-on: DevSecOps-JF
     #needs: build  # Ensures test only runs after build succeeds
     steps:
       - name: Run Unit Tests
