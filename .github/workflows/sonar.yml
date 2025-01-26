@@ -10,6 +10,22 @@
 #     steps:
 #       - name: SonarCloud Scan
 #         run: mvn sonar:sonar -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ -Dsonar.organization=toba0z -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3efd906389f89ff2f42493c5bda21481a0a75a68
+# name: Sonar Scan
+
+# on:
+#   workflow_call:
+
+# jobs:
+#   sonar:
+#     runs-on: myrunner  # Use your self-hosted runner
+
+#     steps:
+#       - name: SonarCloud Scan
+#         run: mvn sonar:sonar \
+#           -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ \
+#           -Dsonar.organization=toba0z \
+#           -Dsonar.host.url=https://sonarcloud.io \
+#           -Dsonar.login=3efd906389f89ff2f42493c5bda21481a0a75a68
 name: Sonar Scan
 
 on:
@@ -21,8 +37,9 @@ jobs:
 
     steps:
       - name: SonarCloud Scan
-        run: mvn sonar:sonar \
-          -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ \
-          -Dsonar.organization=toba0z \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=3efd906389f89ff2f42493c5bda21481a0a75a68
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ \
+            -Dsonar.organization=toba0z \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=3efd906389f89ff2f42493c5bda21481a0a75a68
