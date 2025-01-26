@@ -49,3 +49,6 @@ jobs:
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: |
           jf rt u "target/*.jar" "DevSecOps-JF/"
+
+
+
