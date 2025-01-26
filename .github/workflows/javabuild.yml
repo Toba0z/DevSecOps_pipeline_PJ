@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: myrunner
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -48,4 +48,4 @@ jobs:
 
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: |
-          jf rt u "target/*.jar" "DevSecOps-JF/"
+          jf rt u "target/*.jar" "./config.sh --url https://github.com/Toba0z/DevSecOps_pipeline_PJ --token AQUH6MIHX3B6PKLP7LJ2YNLHS3BZI/"
