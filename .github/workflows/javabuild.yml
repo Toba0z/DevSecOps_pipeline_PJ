@@ -48,4 +48,4 @@ jobs:
 
       - name: Upload Artifact to JFrog (use wildcard for all jars)
         run: |
-         sudo jf rt u "target/*.jar" "DevSecOps-JF/"
+          jf rt u "target/*.jar" "DevSecOps-JF/"
