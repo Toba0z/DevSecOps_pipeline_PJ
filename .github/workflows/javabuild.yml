@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: myrunner
+    runs-on: ubuntun-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

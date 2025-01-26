@@ -33,7 +33,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: myrunner  # Use your self-hosted runner
+    runs-on: ubuntu-latest  # Use your self-hosted runner
 
     steps:
       - name: SonarCloud Scan
