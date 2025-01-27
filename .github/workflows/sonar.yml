@@ -1,57 +1,24 @@
-# .github/workflows/sonar.yml
-#
-# on:
-#  workflow_call:
-
-# jobs:
-#   sonar:
-#     runs-on: java_build
-#     #needs: build  # Ensures Sonar runs after build succeeds
-#     steps:
-#       - name: SonarCloud Scan
-#         run: mvn sonar:sonar -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ -Dsonar.organization=toba0z -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3efd906389f89ff2f42493c5bda21481a0a75a68
-# name: Sonar Scan
-
-# on:
-#   workflow_call:
-
-# jobs:
-#   sonar:
-#     runs-on: myrunner  # Use your self-hosted runner
-
-#     steps:
-#       - name: SonarCloud Scan
-#         run: mvn sonar:sonar \
-#           -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ \
-#           -Dsonar.organization=toba0z \
-#           -Dsonar.host.url=https://sonarcloud.io \
-#           -Dsonar.login=3efd906389f89ff2f42493c5bda21481a0a75a68
-
-name: Sonar Scan
+name: Sonar Scan Workflow
 
 on:
-  workflow_call:  # This allows the workflow to be called by other workflows
+  workflow_call:
 
 jobs:
   sonar:
-    runs-on: ubuntu-latest  # Use Ubuntu runner
+    runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # Call the reusable build workflow
+      - name: Run Build Workflow
+        uses: ./.github/workflows/build.yml
 
-      # Step 2: Set up Java environment
-      - name: Set up Java 11
-        uses: actions/setup-java@v3
+      # Download build artifacts
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
         with:
-          java-version: '11'
+          name: jar
 
-      # Step 3: List files (optional debugging step)
-      - name: List files in the repository
-        run: ls -la
-
-      # Step 4: SonarCloud scan
+      # Run Sonar Scan
       - name: SonarCloud Scan
         run: |
           mvn sonar:sonar \
