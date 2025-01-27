@@ -8,9 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository to access the reusable workflow
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       # Call the reusable build workflow
       - name: Run Build Workflow
-        uses: ./.github/workflows/build.yml
+        uses: ./.github/workflows/javabuild.yml
 
       # Download build artifacts
       - name: Download Build Artifact
