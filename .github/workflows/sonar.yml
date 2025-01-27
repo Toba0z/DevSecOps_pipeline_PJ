@@ -3,10 +3,10 @@ name: Sonar Scan
 
 on:
  workflow_call:
-  
+
 jobs:
   sonar:
-    runs-on: java_build
+    runs-on: ubuntu-latest
     #needs: build  # Ensures Sonar runs after build succeeds
     steps:
       - name: SonarCloud Scan
