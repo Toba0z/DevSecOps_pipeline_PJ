@@ -16,3 +16,6 @@ jobs:
           -Dsonar.organization=toba0z \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        working-directory: DevSecOps_pipeline_PJ/pom.xml
+
+          
