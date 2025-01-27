@@ -1,32 +1,18 @@
-name: Sonar Scan Workflow
+# .github/workflows/sonar.yml
+name: Sonar Scan
 
 on:
-  workflow_call:
-
+ workflow_call:
+  
 jobs:
   sonar:
-    runs-on: ubuntu-latest
-
+    runs-on: java_build
+    #needs: build  # Ensures Sonar runs after build succeeds
     steps:
-      # Checkout the repository to access the reusable workflow
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      # Call the reusable build workflow
-      - name: Run Build Workflow
-        uses: ./.github/workflows/javabuild.yml
-
-      # Download build artifacts
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: jar
-
-      # Run Sonar Scan
       - name: SonarCloud Scan
         run: |
-          mvn sonar:sonar \
-            -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ \
-            -Dsonar.organization=toba0z \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+         mvn sonar:sonar \
+          -Dsonar.projectKey=Toba0z_DevSecOps_pipeline_PJ \
+          -Dsonar.organization=toba0z \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
