@@ -5,7 +5,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: myrunner
+    runs-on: myrunner-2
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
