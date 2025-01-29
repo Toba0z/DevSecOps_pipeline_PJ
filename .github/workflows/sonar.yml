@@ -5,7 +5,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: ubuntu-latest
+    runs-on: myrunner
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,4 +22,4 @@ jobs:
             -Dsonar.organization=toba0z \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-        working-directory: ./  # Use './' if pom.xml is in the root, or specify the correct subdirectory
+       
