@@ -15,9 +15,8 @@ jobs:
         run: |
           if ! command -v docker &> /dev/null; then
             echo "Docker not found. Installing..."
-            sudo yum install -y yum-utils
-            sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-            sudo yum install -y docker-ce docker-ce-cli containerd.io
+            # Install Docker using Amazon Linux native repositories
+            sudo yum install -y docker
             sudo systemctl start docker
             sudo systemctl enable docker
           else
