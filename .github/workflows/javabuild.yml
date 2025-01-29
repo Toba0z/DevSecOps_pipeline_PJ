@@ -17,6 +17,12 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Install Maven
+        run: |
+          sudo apt-get update && sudo apt-get install -y maven
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
         with:
@@ -42,9 +48,12 @@ jobs:
           JF_URL: https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/
           JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
+      - name: Verify JFrog CLI
+        run: jf --version
+
+      - name: Check JFrog Auth
+        run: jf rt ping
+
       - name: Upload Artifact to JFrog
         run: |
-          if ! jf rt u "target/*.jar" "DevSecOps-JF/"; then
-            echo "Failed to upload artifacts to JFrog"
-            exit 1
-          fi
+          jf rt u "target/*.jar" "DevSecOps-JF/" --debug
