@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Maven
         run: |
-          sudo apt-get update && sudo apt-get install -y maven
+          sudo yum update && sudo yum install -y maven
         env:
           DEBIAN_FRONTEND: noninteractive
 
