@@ -45,9 +45,9 @@ jobs:
         with:
           version: latest
         env:
-          JF_URL: https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/
+          JF_URL: https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/artifacts/
           JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
       - name: Upload Artifact to JFrog
         run: |
-          jf rt u "target/*.jar" "DevSecOps-JF/" --debug
+          jf rt u "target/*.jar" "DevSecOps-JF/" 
