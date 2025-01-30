@@ -27,7 +27,8 @@ jobs:
 
       - name: Grant EC2 User Access to Docker  # 👈 **Fix for permission denied**
         run: |
-          sudo usermod -aG docker $USER
+          sudo usermod -aG docker ec2-user
+          sudo chown $USER /var/run/docker.sock
           newgrp docker
 
       - name: Build Docker Image
