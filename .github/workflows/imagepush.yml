@@ -25,10 +25,15 @@ jobs:
           sudo systemctl restart docker
           docker --version
 
+      - name: Grant EC2 User Access to Docker  # 👈 **Fix for permission denied**
+        run: |
+          sudo usermod -aG docker $USER
+          newgrp docker
+
       - name: Build Docker Image
         run: |
-          sudo docker build -t $DOCKER_IMAGE .
-          sudo docker save $DOCKER_IMAGE > docker_image.tar
+          docker build -t $DOCKER_IMAGE .
+          docker save $DOCKER_IMAGE > docker_image.tar
 
       - name: Upload Docker Image Artifact
         uses: actions/upload-artifact@v3
@@ -36,8 +41,8 @@ jobs:
           name: docker-image
           path: docker_image.tar
 
-      - name: Log in to DockerHub
+      - name: Log in to DockerHub with Personal Access Token
         run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Push Docker Image
-        run: sudo docker push $DOCKER_IMAGE
+        run: docker push $DOCKER_IMAGE
