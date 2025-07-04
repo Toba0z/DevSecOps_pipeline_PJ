@@ -1,66 +1,10 @@
-
-# name: Build
-
-# on: 
-#   workflow_call:
-
-# jobs:
-#   build:
-#     runs-on: myrunner-2
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v3
-
-#       - name: Set up JDK 17
-#         uses: actions/setup-java@v3
-#         with:
-#           java-version: '17'
-#           distribution: 'adopt'
-#           cache: maven
-
-#       - name: Install Maven
-#         run: |
-#           sudo yum update && sudo yum install -y maven
-#         env:
-#           DEBIAN_FRONTEND: noninteractive
-
-#       - name: Cache Maven Dependencies
-#         uses: actions/cache@v3
-#         with:
-#           path: ~/.m2/repository
-#           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-#           restore-keys: |
-#             ${{ runner.os }}-maven-
-
-#       - name: Build with Maven
-#         run: mvn clean install
-
-#       - name: Upload Build Artifact
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: jar
-#           path: target/*.jar
-
-#       - name: Configure JFrog CLI
-#         uses: jfrog/setup-jfrog-cli@v3
-#         with:
-#           version: latest
-#         env:
-#           JF_URL: https://trialuz45a9.jfrog.io/artifactory/DevSecOps-JF/artifacts/
-#           JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
-
-#       - name: Upload Artifact to JFrog
-#         run: |
-#           jf rt u "target/*.jar" "DevSecOps-JF/" 
-
-
 name: Build
 on:
   workflow_call:
 
 jobs:
   build:
-    runs-on: myrunner-2
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
@@ -83,14 +27,15 @@ jobs:
       - name: Authenticate with AWS CodeArtifact
         id: auth-codeartifact
         run: |
-          export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+          CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
             --domain toba-artifact \
             --domain-owner 575108950135 \
             --region us-west-2 \
             --query authorizationToken \
             --output text)
           echo "CODEARTIFACT_AUTH_TOKEN=$CODEARTIFACT_AUTH_TOKEN" >> $GITHUB_ENV
-          export CODEARTIFACT_URL=$(aws codeartifact get-repository-endpoint \
+
+          CODEARTIFACT_URL=$(aws codeartifact get-repository-endpoint \
             --domain toba-artifact \
             --domain-owner 575108950135 \
             --repository DevSecOps-Artifact \
@@ -133,31 +78,4 @@ jobs:
                     <id>toba-artifact-DevSecOps-Artifact</id>
                     <url>\${env.CODEARTIFACT_URL}</url>
                   </repository>
-                </repositories>
-              </profile>
-            </profiles>
-          </settings>
-          EOF
-
-      - name: Install Maven
-        run: |
-          sudo yum update -y && sudo yum install -y maven
-        env:
-          DEBIAN_FRONTEND: noninteractive
-
-      - name: Cache Maven Dependencies
-        uses: actions/cache@v3 
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Build with Maven
-        run: mvn clean install --settings ~/.m2/settings.xml
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: jar
-          path: target/*.jar
+                </repo
