@@ -14,6 +14,16 @@
         <url>https://cncf.jfrog.io/artifactory/maven-remote-libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
+<!-- <distributionManagement>
+  <snapshotRepository>
+    <id>nexus</id>
+    <url>http://54.70.105.139:8081/repository/maven-snapshots/</url>
+  </snapshotRepository>
+  <repository>
+    <id>nexus</id>
+    <url>http://54.70.105.139:8081/repository/maven-releases/</url>
+  </repository>
+</distributionManagement> -->
 
   <parent>
     <groupId>org.springframework.boot</groupId>
