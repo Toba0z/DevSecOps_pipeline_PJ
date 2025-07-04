@@ -1,14 +1,22 @@
-# .github/workflows/test.yml
 name: Test
 
 on:
- workflow_call:
+  workflow_call:
 
 jobs:
   test:
-    runs-on: ubuntu-latest # Use your self-hosted runner
-    #needs: build  # Ensures test only runs after build succeeds
+    runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Run Unit Tests
         run: mvn test
 
@@ -16,4 +24,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: target/test-classes/TEST-*.xml
+          path: target/surefire-reports/TEST-*.xml

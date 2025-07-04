@@ -8,10 +8,13 @@
   <version>3.2.0-SNAPSHOT</version>
   
   <distributionManagement>
+    <repository>
+      <id>toba-artifact-DevSecOps-Artifact</id>
+      <url>https://toba-artifact-575108950135.d.codeartifact.us-west-2.amazonaws.com/maven/DevSecOps-Artifact/</url>
+    </repository>
     <snapshotRepository>
-        <id>snapshots</id>
-        <name>a0mhlxtoyc29l-artifactory-primary-0-snapshots</name>
-        <url>https://cncf.jfrog.io/artifactory/maven-remote-libs-snapshot-local</url>
+      <id>toba-artifact-DevSecOps-Artifact</id>
+      <url>https://toba-artifact-575108950135.d.codeartifact.us-west-2.amazonaws.com/maven/DevSecOps-Artifact/</url>
     </snapshotRepository>
   </distributionManagement>
 
