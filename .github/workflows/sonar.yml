@@ -6,18 +6,19 @@ on:
 jobs:
   sonar:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'  # Use Temurin JDK (Recommended)
-          java-version: '17'        # Match your project's Java version
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Build Project
-        run: mvn clean package -DskipTests  # Skipping tests to save time
+        run: mvn clean verify -DskipTests
 
       - name: SonarCloud Scan
         run: |
@@ -26,4 +27,4 @@ jobs:
             -Dsonar.organization=toba0z \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.java.binaries=target/classes  # Ensure SonarQube finds compiled classes
+            -Dsonar.java.binaries=target/classes
